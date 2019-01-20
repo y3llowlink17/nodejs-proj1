@@ -3,7 +3,7 @@ const fs = require('fs');
 
 
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method, req.headers);
+    //console.log(req.url, req.method, req.headers);
     //process.exit();
 
     const url = req.url;
@@ -25,7 +25,26 @@ const server = http.createServer((req, res) => {
     }
 
     if(url === '/message' && method === 'POST') {
-        fs.writeFileSync('message.txt', 'DUMMY');
+        const body = [];
+        
+        //event listener when there is incoming request data
+        req.on('data', (chunk) => {
+            console.log('request data..... ', chunk);
+            body.push(chunk);
+        });
+
+        //event listener when the data is fully parsed
+        req.on('end', () => {
+            const parsedBody = Buffer.concat(body);     // testing
+            const parsedBodyString = Buffer.concat(body).toString();
+
+            console.log('parsedBody..... ', parsedBody);    // testing
+            console.log('parsedBodyString..... ', parsedBodyString);
+            console.log('parsedBodyString..... ', parsedBodyString.split('=')[1]);
+
+            fs.writeFileSync('message.txt', parsedBodyString.split('=')[1]);
+        });
+
         res.writeHead(302, {Location: '/'});
         
         /* the following lines can be shortened to 'res.writeHead(302, {Location: "/"})' 
