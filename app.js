@@ -34,7 +34,7 @@ const server = http.createServer((req, res) => {
         });
 
         //event listener when the data is fully parsed
-        req.on('end', () => {
+        return req.on('end', () => {
             const parsedBody = Buffer.concat(body);     // testing
             const parsedBodyString = Buffer.concat(body).toString();
 
@@ -42,17 +42,23 @@ const server = http.createServer((req, res) => {
             console.log('parsedBodyString..... ', parsedBodyString);
             console.log('parsedBodyString..... ', parsedBodyString.split('=')[1]);
 
-            fs.writeFileSync('message.txt', parsedBodyString.split('=')[1]);
-        });
+            /*
+            > writeFileSync ... [synchronous] it will block the next line until its process is finish.
+            For small size file, this is OK. But, not for big size file
 
-        res.writeHead(302, {Location: '/'});
-        
-        /* the following lines can be shortened to 'res.writeHead(302, {Location: "/"})' 
-        'statusCode = 302' means redirection, and Location property refers to location of the redirection */
-        //res.statusCode = 302;
-        //res.setHeader('Location', '/');
-        
-        return res.end();
+            > writeFile ... [asynchronous] it will NOT block the next line. It will execute asychronously.
+            Normally, this is the proper function to execute generally. writeFile 3rd argument is a callback func
+            that will be called upon completion of the writeFile process. The callback receive an 'error' params that
+            will have a value of 'null' if no error and will pass 'error' content if there is error occurs.
+            */
+            
+            //fs.writeFileSync('message.txt', parsedBodyString.split('=')[1]);
+
+            fs.writeFile('message.txt', parsedBodyString.split('=')[1], (err) => {
+                res.writeHead(302, {Location: '/'});
+                return res.end();
+            });
+        });
     }
 
     res.setHeader('Content-Type', 'text/html');
