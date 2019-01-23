@@ -67,7 +67,12 @@ const requestHandler = (req, res) => {
 
 //module.exports = requestHandler;
 
+/* 
 module.exports = {
     handler: requestHandler,
     someText: 'some hard coded text'    // just some example if there is other function
 };
+*/
+
+module.exports.handler = requestHandler;
+module.exports.someText = 'some hard coded text';
