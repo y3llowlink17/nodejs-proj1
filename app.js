@@ -13,7 +13,9 @@ app.use((req, res, next) => {
     res.send('<h5>Hello from ExpressJS</h5>');
 });
 
-const server = http.createServer(app);
+app.listen(3000);
 
-server.listen(3000);
+//app.listen(3000) is similar to the following 2 lines #ref: expressJS lib: application.js
+//const server = http.createServer(app);
+//server.listen(3000);
 
