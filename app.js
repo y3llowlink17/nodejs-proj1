@@ -1,21 +1,36 @@
-const http = require('http');
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 /* 
-if you put the path '/' first, it will always load "Hello from ExpressJS". Because '/' is not fullpath, which
-means '/middleware' also contains '/'. Therefore, always put '/' at the last 
+body-parser package is needed in order to parse the incoming request.
+this is the same as when we use "req.on('data', (chunk)=>{...})" to listen to incoming chunk.
+and regarding to extended property as follows.
+- string or array (when extended is false), 
+- any type (when extended is true).
+http://expressjs.com/en/api.html#express.urlencoded
+https://medium.com/@adamzerner/how-bodyparser-works-247897a93b90
 */
 
-app.use('/middleware', (req, res, next) => {
-    console.log('inside middleware 2..... ');
-    res.send('<h5>Hello from Middleware</h5>');
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/add-product', (req, res, next) => {
+    console.log('inside add-product..... ');
+    res.send(
+        `<form action="/product" method="POST">
+            <input type="text" name="product-name"></input>
+            <button type="submit">Submit</button>
+        </form>`);
+});
+
+app.use('/product', (req, res, next) => {
+    console.log('inside product..... ', req.body);
+    res.redirect('/');
 });
 
 app.use('/', (req, res, next) => {
-    console.log('inside middleware 1..... ');
-    res.send('<h5>Hello from ExpressJS</h5>')
+    res.send('<h5>Hello from ExpressJS</h5>');
 });
 
 app.listen(3000);
