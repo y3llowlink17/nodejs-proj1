@@ -5,13 +5,15 @@ const router = express.Router();    //express.Router() is kind of mini express. 
 router.get('/add-product', (req, res, next) => {
     console.log('inside add-product..... ');
     res.send(
-        `<form action="/product" method="POST">
+        `<form action="/add-product" method="POST">
             <input type="text" name="product-name"></input>
             <button type="submit">Submit</button>
         </form>`);
 });
 
-router.post('/product', (req, res, next) => {
+// using similar path only the request method is different.
+// this works the same
+router.post('/add-product', (req, res, next) => {
     console.log('inside product..... ', req.body);
     res.redirect('/');
 });
