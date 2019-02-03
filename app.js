@@ -21,6 +21,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(adminRoute);
 app.use(shopRoute);
 
+/* 
+add this line to handle unavailable route. Eventually, 
+the code will reach here when the rest above DOES NOT
+ */
+app.use((req, res, next) => {
+    res.status(404).send('<h3>Page NOT FOUND!!!!!</h3>')
+});
+
 app.listen(3000);
 
 //app.listen(3000) is similar to the following 2 lines #ref: expressJS lib: application.js
