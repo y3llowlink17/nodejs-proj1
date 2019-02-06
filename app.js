@@ -19,6 +19,11 @@ https://medium.com/@adamzerner/how-bodyparser-works-247897a93b90
 
 app.use(bodyParser.urlencoded({extended: false}));
 
+// this is to get path to folder public & make the folder and its content static so it can be access by other resources publicly
+// you can set more than one static resource to be accessed publicly
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 /* 
 Filter path. Only path that starts from '/admin' will be handled by adminRoute.
 if GET request points to ./add-product, the page will NOT be found
