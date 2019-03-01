@@ -9,7 +9,7 @@ const products = [];
 router.get('/add-product', (req, res, next) => {
     console.log('inside add-product..... ');
 
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+    res.render('add-product', {docTitle: 'Add Product'});
 });
 
 
