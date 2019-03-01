@@ -39,7 +39,7 @@ Filter path. Only path that starts from '/admin' will be handled by adminRoute.
 if GET request points to ./add-product, the page will NOT be found
 only if GET request points to ./admin/add-product, the page will be rendered
  */
-app.use('/admin', adminRoute);
+app.use('/admin', adminRoute.router);
 app.use(shopRoute);
 
 /* 
