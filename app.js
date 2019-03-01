@@ -4,6 +4,16 @@ const path = require('path');
 
 const app = express();
 
+
+/* 
+express.set(). Assigns setting name to value. You may store any value that you want, 
+but certain names can be used to configure the behavior of the server. You can even set values/params to
+be shared globally. https://expressjs.com/en/4x/api.html#app.set
+*/
+app.set('view engine', 'pug');  // to set the available templating engine
+app.set('views', 'views');     // to set the location of the template (views) which is happened to be '/views'
+
+
 const adminRoute = require('./routes/admin-route');
 const shopRoute = require('./routes/shop-route');
 

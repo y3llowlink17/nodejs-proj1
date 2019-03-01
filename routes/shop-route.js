@@ -5,9 +5,11 @@ const rootDir = require('../util/path');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    // path must be absolute or specify root to res.sendFile
-    // "__dirname" points to absolute path of "routes"
-    res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+    /* 
+    "res.render" will search for pug file to render. 
+    Since we set it already in the app.js we do not need to specify the path here
+    */
+    res.render('shop');
 });
 
 module.exports = router;
