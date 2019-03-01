@@ -9,7 +9,7 @@ const products = [];
 router.get('/add-product', (req, res, next) => {
     console.log('inside add-product..... ');
 
-    res.render('add-product', {docTitle: 'Add Product'});
+    res.render('add-product', {docTitle: 'Add Product', path: '/admin/add-product'});
 });
 
 
