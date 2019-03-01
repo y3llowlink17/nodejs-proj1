@@ -1,32 +1,18 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title #{docTitle}
-        link(rel="stylesheet" href="/css/main.css")
-    body
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__item-list
-                    li.main-header__item
-                        a.active(href="/") Shop
-                    li.main-header__item
-                        a(href="/admin/add-product") Add Product
-        main
-            if items.length > 0
-                .grid
-                    each product in items
-                        article.card.product-item(style="max-width: 200px")
-                            header.card__header
-                                h1.product__title #{product.title}
-                            .card__image
-                                img(src="http://www.columbiactlibrary.org/wp-content/uploads/2012/10/books.png", alt="", width="100%")
-                            .card__content
-                                h2.product__price $19.99
-                                p.product__description A very interesting book about so many event
-                            .card__action
-                                button.btn Add to Cart
-            else
-                h1 No Product Available!
+extends layouts/main-layout.pug
+
+block content
+    if items.length > 0
+        .grid
+            each product in items
+                article.card.product-item(style="max-width: 200px")
+                    header.card__header
+                        h1.product__title #{product.title}
+                    .card__image
+                        img(src="http://www.columbiactlibrary.org/wp-content/uploads/2012/10/books.png", alt="", width="100%")
+                    .card__content
+                        h2.product__price $19.99
+                        p.product__description A very interesting book about so many event
+                    .card__action
+                        button.btn Add to Cart
+    else
+        h1 No Product Available!
