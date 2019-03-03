@@ -9,7 +9,14 @@ const app = express();
 - required to initiate the plugin engine because handlebars is not built-in plugin of expressjs, different from pug & ejs.
 - the ext of the engine below is up to you. Below it is written as 'hbs'. Therefore, the file extension must follow 'hbs'
 */
-app.engine('hbs', expressHbs());
+app.engine(
+        'hbs', 
+        expressHbs({
+            layoutsDir: 'views/layouts/',
+            defaultLayout: 'main-layout',
+            extname: 'hbs'  // here need to specify layout extension as well
+        })
+    );
 
 /* 
 express.set(). Assigns setting name to value. You may store any value that you want, 
@@ -53,7 +60,10 @@ add this line to handle unavailable route. Eventually,
 the code will reach here when the rest above DOES NOT
  */
 app.use((req, res, next) => {
-    res.status(404).render('404', {docTitle: 'Page Not Found'});
+    res.status(404).render('404', {
+        docTitle: 'Page Not Found',
+        //layout: false   // specify this property if you DO NOT want to use layout. By default, after layout is set, layout: true
+    });
 });
 
 app.listen(3000);
