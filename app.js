@@ -1,16 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const expressHbs = require('express-handlebars');
 
 const app = express();
 
+/* 
+- required to initiate the plugin engine because handlebars is not built-in plugin of expressjs, different from pug & ejs.
+- the ext of the engine below is up to you. Below it is written as 'hbs'. Therefore, the file extension must follow 'hbs'
+*/
+app.engine('hbs', expressHbs());
 
 /* 
 express.set(). Assigns setting name to value. You may store any value that you want, 
 but certain names can be used to configure the behavior of the server. You can even set values/params to
 be shared globally. https://expressjs.com/en/4x/api.html#app.set
 */
-app.set('view engine', 'pug');  // to set the available templating engine
+app.set('view engine', 'hbs');  // to set the available templating engine
 app.set('views', 'views');     // to set the location of the template (views) which is happened to be '/views'
 
 
