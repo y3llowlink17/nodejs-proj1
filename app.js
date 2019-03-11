@@ -4,6 +4,15 @@ const path = require('path');
 
 const app = express();
 
+/* 
+express.set(). Assigns setting name to value. You may store any value that you want, 
+but certain names can be used to configure the behavior of the server. You can even set values/params to
+be shared globally. https://expressjs.com/en/4x/api.html#app.set
+*/
+app.set('view engine', 'ejs');  // to set the available templating engine
+app.set('views', 'views');     // to set the location of the template (views) which is happened to be '/views'
+
+
 const adminRoute = require('./routes/admin-route');
 const shopRoute = require('./routes/shop-route');
 
@@ -29,7 +38,7 @@ Filter path. Only path that starts from '/admin' will be handled by adminRoute.
 if GET request points to ./add-product, the page will NOT be found
 only if GET request points to ./admin/add-product, the page will be rendered
  */
-app.use('/admin', adminRoute);
+app.use('/admin', adminRoute.router);
 app.use(shopRoute);
 
 /* 
@@ -37,7 +46,10 @@ add this line to handle unavailable route. Eventually,
 the code will reach here when the rest above DOES NOT
  */
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).render('404', {
+        docTitle: 'Page Not Found',
+        //layout: false   // specify this property if you DO NOT want to use layout. By default, after layout is set, layout: true
+    });
 });
 
 app.listen(3000);

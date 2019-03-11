@@ -1,0 +1,18 @@
+extends layouts/main-layout.pug
+
+block content
+    if items.length > 0
+        .grid
+            each product in items
+                article.card.product-item(style="max-width: 200px")
+                    header.card__header
+                        h1.product__title #{product.title}
+                    .card__image
+                        img(src="http://www.columbiactlibrary.org/wp-content/uploads/2012/10/books.png", alt="", width="100%")
+                    .card__content
+                        h2.product__price $19.99
+                        p.product__description A very interesting book about so many event
+                    .card__action
+                        button.btn Add to Cart
+    else
+        h1 No Product Available!
