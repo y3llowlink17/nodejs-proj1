@@ -33,24 +33,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 // you can set more than one static resource to be accessed publicly
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-/* 
-Filter path. Only path that starts from '/admin' will be handled by adminRoute.
-if GET request points to ./add-product, the page will NOT be found
-only if GET request points to ./admin/add-product, the page will be rendered
- */
 app.use('/admin', adminRoute);
 app.use(shopRoute);
 
-/* 
-add this line to handle unavailable route. Eventually, 
-the code will reach here when the rest above DOES NOT
- */
 app.use(errorController.get404);
 
 app.listen(3000);
 
-//app.listen(3000) is similar to the following 2 lines #ref: expressJS lib: application.js
-//const server = http.createServer(app);
-//server.listen(3000);
 
