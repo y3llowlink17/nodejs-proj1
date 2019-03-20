@@ -48,7 +48,7 @@ the code will reach here when the rest above DOES NOT
 app.use((req, res, next) => {
     res.status(404).render('404', {
         docTitle: 'Page Not Found',
-        //layout: false   // specify this property if you DO NOT want to use layout. By default, after layout is set, layout: true
+        path: '/'
     });
 });
 
