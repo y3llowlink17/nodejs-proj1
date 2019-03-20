@@ -15,6 +15,7 @@ app.set('views', 'views');     // to set the location of the template (views) wh
 
 const adminRoute = require('./routes/admin-route');
 const shopRoute = require('./routes/shop-route');
+const errorController = require('./controllers/error');
 
 /* 
 body-parser package is needed in order to parse the incoming request.
@@ -38,19 +39,14 @@ Filter path. Only path that starts from '/admin' will be handled by adminRoute.
 if GET request points to ./add-product, the page will NOT be found
 only if GET request points to ./admin/add-product, the page will be rendered
  */
-app.use('/admin', adminRoute.router);
+app.use('/admin', adminRoute);
 app.use(shopRoute);
 
 /* 
 add this line to handle unavailable route. Eventually, 
 the code will reach here when the rest above DOES NOT
  */
-app.use((req, res, next) => {
-    res.status(404).render('404', {
-        docTitle: 'Page Not Found',
-        path: '/'
-    });
-});
+app.use(errorController.get404);
 
 app.listen(3000);
 
