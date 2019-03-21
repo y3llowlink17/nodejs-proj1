@@ -13,7 +13,11 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-    const products = Product.fetchAll()
-
-    res.render('shop', {items: products, docTitle: 'Shop', path: '/'});
+    Product.fetchAll(products => {  // fetchAll() calls readFile() which is asynchronous func, that's why we need to register callback into it
+        res.render('shop', {
+            items: products, 
+            docTitle: 'Shop', 
+            path: '/'
+        });
+    })
 };

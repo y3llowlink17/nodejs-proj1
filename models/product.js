@@ -33,7 +33,15 @@ module.exports = class Product {
         });
     }
 
-    static fetchAll() {
-        return [];      // will fix on next commit
+    static fetchAll(cb) {
+        fs.readFile(savePath, (err, content) => {   // this is asynchronous func
+            if(!err) {
+                if(content.length > 0) {
+                    return cb(JSON.parse(content));
+                }
+            }
+
+            return cb([]);
+        });
     }
 }
